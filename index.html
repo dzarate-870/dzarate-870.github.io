@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Zarate - CAD Portfolio</title>
+    <style>
+        :root {
+            --primary-green: #2a8a0e;
+            --bg-color: #ffffff;
+            --text-color: #333;
+            --header-border: #eee;
+            --card-bg: #f9f9f9;
+            --modal-bg: rgba(0,0,0,0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-border: #333;
+            --card-bg: #1e1e1e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+        }
+
+        #theme-toggle {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        header {
+            border-bottom: 1px solid var(--header-border);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        h1 { font-size: 3rem; text-transform: uppercase; margin: 0; font-weight: 300; letter-spacing: 1px; }
+
+        .contact-info { text-align: right; font-size: 0.95rem; line-height: 1.4; }
+        
+        .employment-notice {
+            background-color: rgba(42, 138, 14, 0.1);
+            border-left: 4px solid var(--primary-green);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .intro-section { margin-bottom: 30px; max-width: 850px; }
+
+        .button-group { margin-bottom: 40px; display: flex; gap: 10px; }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn.outline {
+            background-color: transparent;
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+        }
+
+        section { margin-bottom: 60px; }
+        h2 { font-weight: 400; text-transform: uppercase; border-bottom: 1px solid var(--header-border); padding-bottom: 10px; margin-bottom: 25px; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .portfolio-item:hover { transform: translateY(-3px); }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .label {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.8);
+            color: #333;
+            padding: 5px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        .featured-project {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .featured-project img {
+            width: 45%;
+            max-width: 400px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .featured-desc { flex: 1; }
+
+        .video-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary-green);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--modal-bg);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #lightbox img { max-width: 90%; max-height: 85%; border: 4px solid white; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; }
+            .contact-info { text-align: left; margin-top: 20px; }
+            .featured-project { flex-direction: column; }
+            .featured-project img { width: 100%; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <div class="top-controls">
+        <button id="theme-toggle">Toggle Dark Mode</button>
+    </div>
+
+    <header>
+        <h1>CAD Portfolio</h1>
+        <div class="contact-info">
+            <strong>Phone:</strong> (702) 850-2045<br>
+            <strong>Email:</strong> <a href="mailto:davidazarate2 @gmail.com" style="color:inherit;">davidazarate2 @gmail.com</a><br>
+            <strong>Location:</strong> Las Vegas, NV (Open to Relocation)
+        </div>
+    </header>
+
+    <div class="employment-notice">
+        <strong>To whom it may concern:</strong> I am currently seeking new employment opportunities in CAD Design, CAM, or Mechanical Engineering roles. Please reach out via phone or email if my background aligns with your team's needs.
+    </div>
+
+    <div class="intro-section">
+        <p>I have been using Computer-Aided Design for approximately 6 years. I am proficient in both Fusion 360 and SolidWorks. I have used CAD in both of my co-ops, classes and projects in college, and for my personal projects. CAD is a tool I thoroughly enjoy utilizing, as it allows me to translate ideas from my mind into tangible representations.</p>
+    </div>
+
+    <div class="button-group">
+        <button class="btn">CAD Design Projects</button>
+        <button class="btn outline">CAM Projects</button>
+    </div>
+
+    <section>
+        <h2>CAD Projects</h2>
+        <div class="grid">
+            <div class="portfolio-item" onclick="openLightbox('public/i1.png')"><img src="public/i1.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i2.png')"><img src="public/i2.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i3.png')"><img src="public/i3.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i4.png')"><img src="public/i4.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i5.png')"><img src="public/i5.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i7.png')"><img src="public/i7.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i8.png')"><img src="public/i8.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i9.png')"><img src="public/i9.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i10.png')"><img src="public/i10.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i11.png')"><img src="public/i11.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i12.png')"><img src="public/i12.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i13.png')"><img src="public/i13.png"><div class="label">cad model</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/i14.png')"><img src="public/i14.png"><div class="label">cad model</div></div>
+        </div>
+    </section>
+
+    <section id="cam-section">
+        <h2>CAM Project & Simulation</h2>
+        
+        <div class="featured-project">
+            <img src="public/i6.png" onclick="openLightbox('public/i6.png')" alt="CAM Project">
+            <div class="featured-desc">
+                <h3>Machining Simulation</h3>
+                <p>Advanced Computer-Aided Manufacturing project featuring detailed toolpath simulations and machining strategy optimization.</p>
+                <a href="https://youtu.be/MN_h9EuEhYI" target="_blank" class="video-link">▶ VIEW CAM SIMULATION VIDEO</a>
+            </div>
+        </div>
+
+        <div class="featured-project">
+            <img src="public/i16.png" onclick="openLightbox('public/i16.png')" alt="Lathe Operation">
+            <div class="featured-desc">
+                <h3>First Lathe Op in Inventor</h3>
+                <p>A demonstration of lathe turning operations programmed using Autodesk Inventor CAM, showing precision toolpaths and setup.</p>
+                <a href="https://youtu.be/gti3SXLdiZQ" target="_blank" class="video-link">▶ VIEW LATHE OPERATION VIDEO</a>
+            </div>
+        </div>
+
+        <div class="featured-project">
+            <img src="public/i15.png" onclick="openLightbox('public/i15.png')" alt="4th Axis Operation">
+            <div class="featured-desc">
+                <h3>Second 4th Axis Op in CAMWorks</h3>
+                <p>Advanced 4-axis machining setup using CAMWorks, highlighting indexing and complex rotational toolpath generation.</p>
+                <a href="https://youtu.be/fJY8esBbju0" target="_blank" class="video-link">▶ VIEW 4TH AXIS OPERATION VIDEO</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>3D Printed Parts</h2>
+        <div class="grid">
+            <div class="portfolio-item" onclick="openLightbox('public/p1.png')"><img src="public/p1.png"><div class="label">3d printed part</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/p2.png')"><img src="public/p2.png"><div class="label">3d printed part</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/p3.png')"><img src="public/p3.png"><div class="label">3d printed part</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/p4.png')"><img src="public/p4.png"><div class="label">3d printed part</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/p5.png')"><img src="public/p5.png"><div class="label">3d printed part</div></div>
+            <div class="portfolio-item" onclick="openLightbox('public/p6.png')"><img src="public/p6.png"><div class="label">3d printed part</div></div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Featured Custom Project</h2>
+        <div class="featured-project">
+            <img src="public/p7.png" onclick="openLightbox('public/p7.png')" alt="RPG-18 Launcher">
+            <div class="featured-desc">
+                <h3>RPG-18 Airsoft Foam Launcher</h3>
+                <p>A custom-built airsoft foam flinger designed to replicate the RPG-18. This project involved complex mechanical design, assembly of 3D printed components, and functional testing to ensure a reliable launching mechanism while maintaining a highly realistic aesthetic.</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox" onclick="this.style.display='none'">
+        <img id="lightbox-img" src="">
+    </div>
+
+    <script>
+        const btn = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        btn.addEventListener('click', () => {
+            const current = body.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', next);
+            btn.innerText = next === 'light' ? 'Toggle Dark Mode' : 'Toggle Light Mode';
+        });
+
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
